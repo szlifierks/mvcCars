@@ -1,0 +1,59 @@
+﻿@model List<Car>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <form asp-action="Index">
+        <select name="EngId" class="form-control">
+            @foreach (Engine engine in ViewBag.EngineList)
+            {
+                if (engine.Id == ViewBag.EngId)
+                {
+                    <option value="@engine.Id" selected>@engine.Name</option>
+                }
+                else
+                {
+                    <option value="@engine.Id">@engine.Name</option>
+                }
+
+            }
+        </select>
+        
+        <input type="submit" value="wybierz silnik" class="btn btn-primary"/>
+    </form>
+    <table class="table">
+        <tr>
+            <th>Id</th>
+            <th>Marka</th>
+            <th>Model</th>
+            <th> </th>
+            <th> </th>
+        </tr>
+
+        @foreach (Car car in Model)
+        {
+            <tr>
+                <td>@car.Id</td>
+                <td>@car.Brand</td>
+                <td>@car.Model</td>
+                <td>
+                    <a class="btn btn-danger" asp-controller="Home" asp-action="DeleteCar" asp-route-id="@car.Id">Usuń</a>
+                </td>
+                <td>
+                    <a class="btn btn-success" asp-controller="Home" asp-action="UpdateCar" asp-route-id="@car.Id">Edytuj</a>
+                </td>
+                <td>
+                    <a class="btn btn-info" asp-controller="Home" asp-action="Details" asp-route-id="@car.Id">Details</a>
+                </td>
+            </tr>
+        }
+    </table>
+
+</div>
+<a asp-controller="home" asp-action="CreateCar">
+    <button type="button" class="btn btn-outline-dark btn-primary">Dodaj auto</button>
+</a>
+<a asp-controller="home" asp-action="SilnikMarka">
+    <button type="button" class="btn btn-outline-dark btn-primary">silnik/marka</button>
+</a>

@@ -1,0 +1,27 @@
+@model Car
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Szczegóły autka</h1>
+
+<div class="row">
+    <table class=" table">
+        <tr>
+            <th>Id</th>
+            <th>Marka</th>
+            <th>Model</th>
+            <th>Rodzaj silnika</th>
+        </tr>
+        {
+        <tr>
+            <td>@Model.Id</td>
+            <td>@Model.Brand</td>
+            <td>@Model.Model</td>
+            <td>@Model.Engine.Name</td>
+        </tr>
+        }
+    </table>
+    <a asp-action="Index" class="btn btn-info">powrot</a>
+</div>

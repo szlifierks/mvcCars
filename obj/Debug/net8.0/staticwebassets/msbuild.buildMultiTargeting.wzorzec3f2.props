@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\wzorzec3f2.props" />
+</Project>

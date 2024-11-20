@@ -1,0 +1,28 @@
+@model List<Car>
+
+@{
+    ViewData["Title"] = "SilnikMarka";
+}
+
+<div>
+    <form asp-action="SilnikMarka" method="post">
+        <input type="hidden" id="engineId" name="engId" value="0" />
+        @foreach (Engine engine in ViewBag.EngineList)
+        {
+            <button type="button" class="btn btn-primary" onclick="document.getElementById('engineId').value='@engine.Id'; this.form.submit();">@engine.Name</button>
+        }
+    </form>
+</div>
+<table class="table">
+    <tr>
+        <th>Marka</th>
+    </tr>
+
+    @foreach (Car car in Model)
+    {
+        <tr>
+            <td>@car.Brand</td>
+        </tr>
+    }
+</table>
+<a asp-action="Index" class="btn btn-info" >powrot</a>
