@@ -4,7 +4,7 @@
 }
 
 <div class="row">
-    <form asp-action="Index">
+    <form asp-action="Index" method="get">
         <select name="EngId" class="form-control">
             @foreach (Engine engine in ViewBag.EngineList)
             {
@@ -25,13 +25,16 @@
     <table class="table">
         <tr>
             <th>Id</th>
-            <th>Marka</th>
-            <th>Model</th>
+            <th>Marka
+                <a asp-action="Index" asp-route-sort="up" asp-route-engId="@ViewBag.EngId" class="btn btn-info">👆</a>
+                <a asp-action="Index" asp-route-sort="down" asp-route-engId="@ViewBag.EngId" class="btn btn-info">👇</a></th>
+            <th>Model
+                </th>
             <th> </th>
             <th> </th>
         </tr>
 
-        @foreach (Car car in Model)
+        @foreach (Car car in ViewBag.List)
         {
             <tr>
                 <td>@car.Id</td>

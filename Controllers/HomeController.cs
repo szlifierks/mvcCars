@@ -26,21 +26,28 @@ namespace wzorzec3f2.Controllers
                 Engine.list.Add(new Engine { Id = 3, Name = "Electric" });
             }
         }
-
-        public IActionResult Index()
-        {
-            ViewBag.EngId = 0;
-            ViewBag.EngineList = Engine.list;
-            return View(Car.list);
-        }
-        [HttpPost]
-        public IActionResult Index(int engId)
+        [HttpGet]
+        public IActionResult Index(int engId, string sort)
         {
             ViewBag.EngineList = Engine.list;
             ViewBag.EngId = engId;
-            return View(Car.list.Where(x => x.EngineId == engId).ToList());
+             = Car.list;
+            if (engId != 0)
+            {
+                ViewBag.list = Car.list.Where(x => x.EngineId == engId).ToList();
+            }
+            if(!string.IsNullOrEmpty(sort))
+            {
+                if(sort == "up")
+                {
+                    ViewBag.list = ViewBag.list.OrderBy(x => x.Brand).ToList();
+                }
+                else if(sort == "down")
+                {
+                    ViewBag.list = ViewBag.list.OrderBy(x => x.Brand).ToList();
+                }
+            }
         }
-
         public IActionResult CreateCar()
         {
             ViewBag.EngineList = Engine.list.Select(x => 
