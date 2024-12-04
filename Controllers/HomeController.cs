@@ -120,7 +120,6 @@ namespace wzorzec3f2.Controllers
         }
         
         [HttpPost]
-        [HttpPost]
         public IActionResult SilnikMarka(int engId)
         {
             ViewBag.EngineList = Engine.list;

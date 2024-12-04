@@ -6,13 +6,16 @@
 
 <div>
     <form asp-action="Index" method="post">
-        <input type="hidden" id="proffesionId" name="profId" value="0" />
-        <button type="button" class="btn btn-primary" onclick="document.getElementById('proffesionId').value=0; this.form.submit();">All</button>
+        <input type="hidden" id="professionId" name="profId" value="0" />
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('professionId').value=0; this.form.submit();">All</button>
         @foreach (Profession profession in ViewBag.ProfList)
         {
-            <button type="button" class="btn btn-primary" onclick="document.getElementById('proffesionId').value='@profession.Id'; this.form.submit();">@profession.Name</button>
+            <button type="button" class="btn btn-primary" onclick="document.getElementById('professionId').value='@profession.Id'; this.form.submit();">@profession.Name</button>
         }
     </form>
+    <a asp-controller="Person" asp-action="AddPerson">
+        <button type="button" class="btn btn-outline-dark btn-primary">Dodaj auto</button>
+    </a>
 </div>
 <table class="table">
     <tr>
@@ -25,6 +28,7 @@
         <tr>
             <td>@person.Name</td>
             <td>@person.Profession.Name</td>
+            <td></td>
         </tr>
     }
 </table>
