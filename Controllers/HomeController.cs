@@ -31,7 +31,7 @@ namespace wzorzec3f2.Controllers
         {
             ViewBag.EngineList = Engine.list;
             ViewBag.EngId = engId;
-             = Car.list;
+            List<Car> carList = Car.list;
             if (engId != 0)
             {
                 ViewBag.list = Car.list.Where(x => x.EngineId == engId).ToList();
@@ -40,13 +40,15 @@ namespace wzorzec3f2.Controllers
             {
                 if(sort == "up")
                 {
-                    ViewBag.list = ViewBag.list.OrderBy(x => x.Brand).ToList();
+                    carList = carList.OrderBy(x => x.Brand).ToList();
                 }
-                else if(sort == "down")
+                else
                 {
-                    ViewBag.list = ViewBag.list.OrderBy(x => x.Brand).ToList();
+                    carList = carList.OrderBy(x => x.Brand).ToList();
                 }
             }
+            ViewBag.list = carList;
+            return View();
         }
         public IActionResult CreateCar()
         {
