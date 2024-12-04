@@ -44,11 +44,10 @@ namespace wzorzec3f2.Controllers
                 }
                 else
                 {
-                    carList = carList.OrderBy(x => x.Brand).ToList();
+                    carList = carList.OrderByDescending(x => x.Brand).ToList();
                 }
             }
-            ViewBag.list = carList;
-            return View();
+            return View(carList);
         }
         public IActionResult CreateCar()
         {
