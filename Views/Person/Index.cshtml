@@ -1,0 +1,30 @@
+@model List<Person>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div>
+    <form asp-action="Index" method="post">
+        <input type="hidden" id="proffesionId" name="profId" value="0" />
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('proffesionId').value=0; this.form.submit();">All</button>
+        @foreach (Profession profession in ViewBag.ProfList)
+        {
+            <button type="button" class="btn btn-primary" onclick="document.getElementById('proffesionId').value='@profession.Id'; this.form.submit();">@profession.Name</button>
+        }
+    </form>
+</div>
+<table class="table">
+    <tr>
+        <th>Osoba</th>
+        <th>Profesja</th>
+    </tr>
+
+    @foreach (Person person in Model)
+    {
+        <tr>
+            <td>@person.Name</td>
+            <td>@person.Profession.Name</td>
+        </tr>
+    }
+</table>
