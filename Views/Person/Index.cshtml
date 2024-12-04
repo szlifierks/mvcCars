@@ -14,7 +14,7 @@
         }
     </form>
     <a asp-controller="Person" asp-action="AddPerson">
-        <button type="button" class="btn btn-outline-dark btn-primary">Dodaj auto</button>
+        <button type="button" class="btn btn-outline-dark btn-primary">Dodaj osobe</button>
     </a>
 </div>
 <table class="table">
@@ -28,7 +28,8 @@
         <tr>
             <td>@person.Name</td>
             <td>@person.Profession.Name</td>
-            <td></td>
+            <td><a class="btn btn-warning" asp-controller="Person" asp-action="DeletePerson" asp-route-id="@person.Id">Usun</a></td>
+            <td><a class="btn btn-light" asp-controller="Person" asp-action="EditPerson" asp-route-id="@person.Id">edytuj</a></td>
         </tr>
     }
 </table>
