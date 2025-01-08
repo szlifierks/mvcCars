@@ -5566,25 +5566,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mikol\\.nuget\\packages\\": {}
+    "C:\\Users\\stokowskim\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mikol\\Desktop\\mvcCars\\wzorzec3f2.csproj",
+      "projectUniqueName": "C:\\Users\\stokowskim\\Desktop\\mvcCars\\wzorzec3f2.csproj",
       "projectName": "wzorzec3f2",
-      "projectPath": "C:\\Users\\mikol\\Desktop\\mvcCars\\wzorzec3f2.csproj",
-      "packagesPath": "C:\\Users\\mikol\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mikol\\Desktop\\mvcCars\\obj\\",
+      "projectPath": "C:\\Users\\stokowskim\\Desktop\\mvcCars\\wzorzec3f2.csproj",
+      "packagesPath": "C:\\Users\\stokowskim\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\stokowskim\\Desktop\\mvcCars\\obj\\",
       "projectStyle": "PackageReference",
-      "UsingMicrosoftNETSdk": false,
       "configFilePaths": [
-        "C:\\Users\\mikol\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\stokowskim\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -5624,6 +5625,24 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[8.0.11, 8.0.11]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[8.0.11, 8.0.11]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[8.0.11, 8.0.11]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[8.0.11, 8.0.11]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -5632,7 +5651,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Users\\stokowskim\\.dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   },
