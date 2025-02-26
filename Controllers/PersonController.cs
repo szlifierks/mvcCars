@@ -38,16 +38,15 @@ public class PersonController : Controller
         ViewBag.ProfList = _db.Professions.ToList();
         ViewBag.ProfId = profId;
 
-        List<Person> personList = _db.People.Where(p => p.ProfessionId == profId).ToList();
+        List<Person> personList = _db.People.ToList();
         foreach (var person in personList)
         {
             person.Profession = _db.Professions.FirstOrDefault(p => p.Id == person.ProfessionId);
         }
-        
+
         if (profId != 0)
-        { 
-            var personListSelect = personList.Where(x => x.ProfessionId == profId).ToList();
-            return View(personListSelect);
+        {
+            personList = personList.Where(x => x.ProfessionId == profId).ToList();
         }
 
         return View(personList);
@@ -72,6 +71,7 @@ public class PersonController : Controller
     public IActionResult DeletePerson(int id)
     {
         _db.People.Remove(_db.People.FirstOrDefault(x => x.Id == id));
+        _db.SaveChanges();
         return RedirectToAction("Index", "Person");
     }
     
@@ -93,7 +93,8 @@ public class PersonController : Controller
             updPerson.Name = person.Name;
             updPerson.ProfessionId = person.ProfessionId;
         }
-        
+
+        _db.SaveChanges();
         return RedirectToAction("Index", "Person");
     }
 }
