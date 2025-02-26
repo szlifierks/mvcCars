@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using wzorzec3f2.Models;
 
 namespace wzorzec3f2.Controllers;
@@ -7,33 +8,25 @@ namespace wzorzec3f2.Controllers;
 public class PersonController : Controller
 {
     private readonly ILogger<PersonController> _logger;
-    public PersonController(ILogger<PersonController> logger)
+    private readonly podstawyDbContext _db;
+
+    public PersonController(ILogger<PersonController> logger, podstawyDbContext db)
     {
-        if (Person.list.Count == 0)
-        {
-            Person.list.Add(new Person{Id = 1,Name = "jacus", ProfessionId = 1});
-            Person.list.Add(new Person{Id = 2,Name = "marek", ProfessionId = 2});
-            Person.list.Add(new Person{Id = 3,Name = "romuald", ProfessionId = 3});
-        }
-        if (Profession.list.Count == 0)
-        {
-            Profession.list.Add(new Profession { Id = 1, Name = "goral" });
-            Profession.list.Add(new Profession { Id = 2, Name = "gornik" });
-            Profession.list.Add(new Profession { Id = 3, Name = "ogrodnik" });
-        }
+        _logger = logger;
+        _db = db;
     }
     
     // GET
     public IActionResult Index()
     {
         int profId = 0;
-        ViewBag.ProfList = Profession.list;
+        ViewBag.ProfList = _db.Professions;
         ViewBag.ProfId = profId;
 
-        List<Person> personList = Person.list;
+        List<Person> personList = _db.People.ToList();
         foreach (var person in personList)
         {
-            person.Profession = Profession.list.FirstOrDefault(p => p.Id == person.ProfessionId);
+            person.Profession = _db.Professions.FirstOrDefault(p => p.Id == person.ProfessionId);
         }
         
         return View(personList);
@@ -42,13 +35,13 @@ public class PersonController : Controller
     [HttpPost]
     public IActionResult Index(int profId)
     {
-        ViewBag.ProfList = Profession.list;
+        ViewBag.ProfList = _db.Professions.ToList();
         ViewBag.ProfId = profId;
 
-        List<Person> personList = Person.list.Where(p => p.ProfessionId == profId).ToList();
+        List<Person> personList = _db.People.Where(p => p.ProfessionId == profId).ToList();
         foreach (var person in personList)
         {
-            person.Profession = Profession.list.FirstOrDefault(p => p.Id == person.ProfessionId);
+            person.Profession = _db.Professions.FirstOrDefault(p => p.Id == person.ProfessionId);
         }
         
         if (profId != 0)
@@ -62,7 +55,7 @@ public class PersonController : Controller
     
     public IActionResult AddPerson()
     {
-        ViewBag.ProfList = Profession.list.Select(x => 
+        ViewBag.ProfList = _db.Professions.Select(x => 
                         new SelectListItem 
                             { Text = x.Name, Value = x.Id.ToString() }).ToList();
         return View();
@@ -70,22 +63,22 @@ public class PersonController : Controller
     [HttpPost]
     public IActionResult AddPerson(Person person)
     {
-        person.Id = person.NextId();
-        Person.list.Add(person);
+        _db.People.Add(person);
+        _db.SaveChanges();
         return RedirectToAction("Index", "Person");
     }
     
     
     public IActionResult DeletePerson(int id)
     {
-        Person.list.RemoveAll(x => x.Id == id);
+        _db.People.Remove(_db.People.FirstOrDefault(x => x.Id == id));
         return RedirectToAction("Index", "Person");
     }
     
     public IActionResult EditPerson(int id)
     {
-        var person = Person.list.FirstOrDefault(x => x.Id == id);
-        ViewBag.ProfList = Profession.list.Select(x => 
+        var person = _db.People.FirstOrDefault(x => x.Id == id);
+        ViewBag.ProfList = _db.Professions.Select(x => 
             new SelectListItem 
                 { Text = x.Name, Value = x.Id.ToString() }).ToList();
         return View(person);
@@ -93,7 +86,7 @@ public class PersonController : Controller
     [HttpPost]
     public IActionResult EditPerson(Person person, int id)
     {
-        var updPerson = Person.list.FirstOrDefault(x => x.Id == id);
+        var updPerson = _db.People.FirstOrDefault(x => x.Id == id);
 
         if (updPerson != null)
         {

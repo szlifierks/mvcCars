@@ -2,7 +2,7 @@
   "Files": [
     {
       "Id": "C:\\Users\\stokowskim\\Desktop\\mvcCars\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\wzorzec3f2.bundle.scp.css",
-      "PackagePath": "staticwebassets\\wzorzec3f2.bundle.scp.css"
+      "PackagePath": "staticwebassets\\wzorzec3f2.3iyzucli9t.bundle.scp.css"
     },
     {
       "Id": "C:\\Users\\stokowskim\\Desktop\\mvcCars\\wwwroot\\css\\site.css",
@@ -255,6 +255,10 @@
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.wzorzec3f2.props",
       "PackagePath": "buildTransitive\\wzorzec3f2.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.wzorzec3f2.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.wzorzec3f2.Microsoft.AspNetCore.StaticWebAssets.props",

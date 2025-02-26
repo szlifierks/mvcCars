@@ -7,34 +7,24 @@ namespace wzorzec3f2.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;       
+        private readonly ILogger<HomeController> _logger;
+        private readonly podstawyDbContext _db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, podstawyDbContext db)
         {
             _logger = logger;
-            if (Car.list.Count == 0)
-            {
-                Car.list.Add(new Car { Id = 1, Brand = "BMW", Model = "x7", EngineId = 1});
-                Car.list.Add(new Car { Id = 2, Brand = "Audi", Model = "a6", EngineId = 2 });
-                Car.list.Add(new Car { Id = 3, Brand = "Fiat", Model = "Multipla", EngineId = 3 });
-            }
-
-            if(Engine.list.Count == 0)
-            {
-                Engine.list.Add(new Engine { Id = 1, Name = "Diesel" });
-                Engine.list.Add(new Engine { Id = 2, Name = "Petrol" });
-                Engine.list.Add(new Engine { Id = 3, Name = "Electric" });
-            }
+            _db = db;
         }
+        
         [HttpGet]
         public IActionResult Index(int engId, string sort)
         {
-            ViewBag.EngineList = Engine.list;
+            ViewBag.EngineList = _db.Engines.ToList();
             ViewBag.EngId = engId;
-            List<Car> carList = Car.list;
+            List<Car> carList = _db.Cars.ToList();
             if (engId != 0)
             {
-                ViewBag.list = Car.list.Where(x => x.EngineId == engId).ToList();
+                carList = _db.Cars.Where(x => x.EngineId == engId).ToList();
             }
             if(!string.IsNullOrEmpty(sort))
             {
@@ -51,7 +41,7 @@ namespace wzorzec3f2.Controllers
         }
         public IActionResult CreateCar()
         {
-            ViewBag.EngineList = Engine.list.Select(x => 
+            ViewBag.EngineList = _db.Engines.Select(x => 
                 new SelectListItem 
                     { Text = x.Name, Value = x.Id.ToString() }).ToList();
             return View();
@@ -59,24 +49,26 @@ namespace wzorzec3f2.Controllers
         [HttpPost]
         public IActionResult CreateCar(Car car)
         {
-            car.Id = car.NextId();
-            Car.list.Add(car);
+            _db.Cars.Add(car);
+            _db.SaveChanges();
+            
             return RedirectToAction("Index", "Home");
         }
 
         public IActionResult DeleteCar(int id)
         {
-            Car.list.RemoveAll(x => x.Id == id);
+            _db.Cars.Remove(_db.Cars.FirstOrDefault(x => x.Id == id));
+            _db.SaveChanges();
 
             return RedirectToAction("Index", "Home");
         }
 
         public IActionResult UpdateCar(int id)
         {
-            Car car = Car.list.FirstOrDefault(x => x.Id == id);
+            Car car = _db.Cars.FirstOrDefault(x => x.Id == id);
             if(car != null)
             {
-                ViewBag.EngineList = Engine.list.Select(x =>
+                ViewBag.EngineList = _db.Engines.Select(x =>
                     new SelectListItem
                     {
                         Text = x.Name,
@@ -91,7 +83,7 @@ namespace wzorzec3f2.Controllers
         [HttpPost]
         public IActionResult UpdateCar(int id, Car car)
         {
-            Car carUpt = Car.list.FirstOrDefault(x => x.Id == id);
+            Car carUpt = _db.Cars.FirstOrDefault(x => x.Id == id);
             if (car != null)
             {
                 carUpt.Brand = car.Brand;
@@ -103,10 +95,10 @@ namespace wzorzec3f2.Controllers
 
         public IActionResult Details(int id)
         {
-            Car car = Car.list.FirstOrDefault(x => x.Id == id);
+            Car car = _db.Cars.FirstOrDefault(x => x.Id == id);
             if (car != null)
             {
-                car.Engine = Engine.list.FirstOrDefault(x => x.Id == car.EngineId);
+                car.Engine = _db.Engines.FirstOrDefault(x => x.Id == car.EngineId);
                 return View(car);
             }
             return RedirectToAction("Index", "Home");
@@ -115,16 +107,16 @@ namespace wzorzec3f2.Controllers
         public IActionResult SilnikMarka()
         {
             ViewBag.EngId = 0;
-            ViewBag.EngineList = Engine.list;
-            return View(Car.list);
+            ViewBag.EngineList = _db.Engines;
+            return View(_db.Cars.ToList());
         }
         
         [HttpPost]
         public IActionResult SilnikMarka(int engId)
         {
-            ViewBag.EngineList = Engine.list;
+            ViewBag.EngineList = _db.Engines.ToList();
             ViewBag.EngId = engId;
-            var filteredCars = Car.list.Where(x => x.EngineId == engId)
+            var filteredCars = _db.Cars.Where(x => x.EngineId == engId)
                 .GroupBy(x => x.Brand)
                 .Select(g => g.First())
                 .ToList();

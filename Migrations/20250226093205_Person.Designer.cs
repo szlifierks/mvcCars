@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using wzorzec3f2.Models;
 
@@ -10,9 +11,11 @@ using wzorzec3f2.Models;
 namespace wzorzec3f2.Migrations
 {
     [DbContext(typeof(podstawyDbContext))]
-    partial class podstawyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250226093205_Person")]
+    partial class Person
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
